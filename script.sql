@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS Class (
   idClassCreator int NOT NULL,
   classCreatorName varchar(200) NOT NULL,
 	className varchar(20) NOT NULL,
-	classPassword varchar(16) NOT NULL,
+	classPassword text NOT NULL,
 	classInstitution varchar(20),
 	classCutOff int NOT NULL,
   classDescription varchar(200) NOT NULL,
