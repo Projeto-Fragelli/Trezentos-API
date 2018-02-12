@@ -32,9 +32,11 @@ CREATE TABLE IF NOT EXISTS Class (
 );
 
 CREATE TABLE IF NOT EXISTS PersonHasClass (
+  idPersonHasClass int NOT NULL AUTO_INCREMENT,
 	idPerson int NOT NULL,
 	idClass int NOT NULL,
 	idPersonType int NOT NULL,
+	CONSTRAINT PersonHasClass_pk PRIMARY KEY (idPersonHasClass),
 	CONSTRAINT PersonHasClass_Person_fk FOREIGN KEY (idPerson) REFERENCES Person (idPerson),
 	CONSTRAINT PersonHasClass_Class_fk FOREIGN KEY (idClass) REFERENCES Class (idClass),
 	CONSTRAINT PersonHasClass_PersonType_fk FOREIGN KEY (idPersonType) REFERENCES PersonType (idPersonType)
@@ -45,16 +47,18 @@ CREATE TABLE IF NOT EXISTS Exam (
 	ExamDescription varchar(15) NOT NULL,
 	idClass int NOT NULL,
 	CONSTRAINT Exam_pk PRIMARY KEY (idExam),
-	CONSTRAINT Exam_Class_fk FOREIGN KEY (idClass) REFERENCES Class (idClass),
+	CONSTRAINT Exam_Class_fk FOREIGN KEY (idClass) REFERENCES Class (idClass)
 );
 
 CREATE TABLE IF NOT EXISTS PersonHasExam (
+  idPersonHasExam int NOT NULL AUTO_INCREMENT,
 	idPerson int NOT NULL,
 	idExam int NOT NULL,
   idClass int NOT NULL,
+  CONSTRAINT PersonHasExam_pk PRIMARY KEY (idPersonHasExam),
 	CONSTRAINT PersonHasExam_Person_fk FOREIGN KEY (idPerson) REFERENCES Person (idPerson),
 	CONSTRAINT PersonHasExam_Exam_fk FOREIGN KEY (idExam) REFERENCES Exam (idExam),
-    CONSTRAINT PersonHasExam_Class_fk FOREIGN KEY (idClass) REFERENCES Class (idClass)
+  CONSTRAINT PersonHasExam_Class_fk FOREIGN KEY (idClass) REFERENCES Class (idClass)
 );
 
 CREATE TABLE IF NOT EXISTS PersonGroup (
@@ -104,5 +108,5 @@ CREATE TABLE IF NOT EXISTS Rate (
 	CONSTRAINT Rate_pk PRIMARY KEY (idRate),
   CONSTRAINT Rate_PersonGroup_fk FOREIGN KEY (idGroup) REFERENCES ṔPersonGroup (idGroup),
 	CONSTRAINT Rate_Person_fk FOREIGN KEY (idPerson) REFERENCES Person (idPerson),
-	CONSTRAINT Rate_Person_fk FOREIGN KEY (idPersonEvaluated) REFERENCES Person (idPerson)
+	CONSTRAINT Rate_PersonEvaluated_fk FOREIGN KEY (idPersonEvaluated) REFERENCES Person (idPerson)
 );
