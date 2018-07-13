@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_13_221554) do
+ActiveRecord::Schema.define(version: 2018_07_13_222140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,18 @@ ActiveRecord::Schema.define(version: 2018_07_13_221554) do
     t.string "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "grades", force: :cascade do |t|
+    t.decimal "grade", null: false
+    t.bigint "user_id"
+    t.bigint "exam_id"
+    t.bigint "grade_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_grades_on_exam_id"
+    t.index ["grade_type_id"], name: "index_grades_on_grade_type_id"
+    t.index ["user_id"], name: "index_grades_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -70,7 +82,6 @@ ActiveRecord::Schema.define(version: 2018_07_13_221554) do
   end
 
   create_table "user_has_groups", force: :cascade do |t|
-    t.decimal "grade", null: false
     t.boolean "helper", default: false
     t.bigint "user_id"
     t.bigint "group_id"
@@ -102,6 +113,9 @@ ActiveRecord::Schema.define(version: 2018_07_13_221554) do
 
   add_foreign_key "classrooms", "users"
   add_foreign_key "exams", "classrooms"
+  add_foreign_key "grades", "exams"
+  add_foreign_key "grades", "grade_types"
+  add_foreign_key "grades", "users"
   add_foreign_key "groups", "exams"
   add_foreign_key "user_has_classrooms", "classrooms"
   add_foreign_key "user_has_classrooms", "user_types"

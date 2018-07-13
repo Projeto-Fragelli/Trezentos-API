@@ -1,5 +1,5 @@
 class UserHasGroupSerializer < ActiveModel::Serializer
-  attributes :id, :helper, :grade
+  attributes :id, :helper
 
   has_one :user
   has_one :group

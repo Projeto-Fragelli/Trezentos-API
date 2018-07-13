@@ -45,7 +45,6 @@ class UserHasGroupsController < ApplicationController
     def user_has_group_params
       params.permit(
         :id,
-        :grade,
         :user_id,
         :group_id,
         :helper
