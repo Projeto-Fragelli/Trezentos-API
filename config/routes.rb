@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :grade_types
   resources :user_has_groups
   resources :groups
   resources :user_has_exams
