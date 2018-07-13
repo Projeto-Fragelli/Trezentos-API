@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_13_214416) do
+ActiveRecord::Schema.define(version: 2018_07_13_215327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,17 @@ ActiveRecord::Schema.define(version: 2018_07_13_214416) do
     t.index ["user_id"], name: "index_user_has_exams_on_user_id"
   end
 
+  create_table "user_has_groups", force: :cascade do |t|
+    t.decimal "grade", null: false
+    t.boolean "helper", default: false
+    t.bigint "user_id"
+    t.bigint "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_user_has_groups_on_group_id"
+    t.index ["user_id"], name: "index_user_has_groups_on_user_id"
+  end
+
   create_table "user_types", force: :cascade do |t|
     t.string "description"
     t.datetime "created_at", null: false
@@ -91,4 +102,6 @@ ActiveRecord::Schema.define(version: 2018_07_13_214416) do
   add_foreign_key "user_has_classrooms", "users"
   add_foreign_key "user_has_exams", "exams"
   add_foreign_key "user_has_exams", "users"
+  add_foreign_key "user_has_groups", "groups"
+  add_foreign_key "user_has_groups", "users"
 end

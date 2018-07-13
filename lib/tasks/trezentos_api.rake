@@ -6,7 +6,7 @@ namespace :trezentos_api do
     Rake::Task["db:migrate"].execute
   end
 
-  task UserType: :environment do
+  task init: :environment do
     @student = UserType.new(description:"Aluno")
     if (@student.save)
       @s = UserType.find(@student.id)
