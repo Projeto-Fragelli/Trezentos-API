@@ -1,5 +1,4 @@
 class UserHasClassroomsController < ApplicationController
-  before_action :set_user_has_classroom, only: [:show, :update, :destroy]
 
   # GET /user_has_classrooms
   def index

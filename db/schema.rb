@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_13_211850) do
+ActiveRecord::Schema.define(version: 2018_07_13_213049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,15 @@ ActiveRecord::Schema.define(version: 2018_07_13_211850) do
     t.index ["user_type_id"], name: "index_user_has_classrooms_on_user_type_id"
   end
 
+  create_table "user_has_exams", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "exam_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_user_has_exams_on_exam_id"
+    t.index ["user_id"], name: "index_user_has_exams_on_user_id"
+  end
+
   create_table "user_types", force: :cascade do |t|
     t.string "description"
     t.datetime "created_at", null: false
@@ -71,4 +80,6 @@ ActiveRecord::Schema.define(version: 2018_07_13_211850) do
   add_foreign_key "user_has_classrooms", "classrooms"
   add_foreign_key "user_has_classrooms", "user_types"
   add_foreign_key "user_has_classrooms", "users"
+  add_foreign_key "user_has_exams", "exams"
+  add_foreign_key "user_has_exams", "users"
 end
