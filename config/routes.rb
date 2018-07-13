@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :groups
   resources :user_has_exams
   resources :exams
   resources :user_has_classrooms
