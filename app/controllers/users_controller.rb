@@ -44,12 +44,16 @@ class UsersController < ApplicationController
       command = AuthenticateUser.call(email, password)
 
       if command.success?
+        @user = User.find_by_email(email)
+
         render json: {
           access_token: command.result,
-          message: 'Login Successful'
+          error: false,
+          user: @user,
+          message: 'Logado com sucesso!'
         }
       else
-        render json: { error: command.errors }, status: :unauthorized
+        render json: { error: true, message: "E-mail ou senha invalidos" }, status: :unauthorized
       end
     end
 
