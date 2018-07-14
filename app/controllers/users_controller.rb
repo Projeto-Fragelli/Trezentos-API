@@ -18,10 +18,12 @@ class UsersController < ApplicationController
   def register
     @user = User.new(user_params)
 
-    if @user.save
-      render json: @user, status: :created, location: @user
+    if !@user.valid?
+      render json: { error: @user.valid?, message: @user.message_sign_up_already_exists }
+    elsif @user.save
+      render json: { error: @user.valid?, message: @user.message_sign_up_success, user: @user }, status: :created, location: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user, status: :unprocessable_entity
     end
   end
 
@@ -36,24 +38,32 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.delete(params[:id])
+    @user = User.find(params[:id])
+    
+    if !@user.present?
+      render json: { error: true, message: @user.user_not_exist }, status: :not_found
+    elsif @user.delete
+      render json: { error: false, message: @user.delete_user_success }, status: :ok
+    else
+      render json: { error: true, message: @user.delete_user_error }, status: :not_found
+    end
   end
 
   private
     def authenticate(email, password)
       command = AuthenticateUser.call(email, password)
+      @user = User.find_by_email(email)
 
       if command.success?
-        @user = User.find_by_email(email)
 
         render json: {
           access_token: command.result,
           error: false,
           user: @user,
-          message: 'Logado com sucesso!'
+          message: @user.message_login_success
         }
       else
-        render json: { error: true, message: "E-mail ou senha invalidos" }, status: :unauthorized
+        render json: { error: true, message: @user.message_login_error }, status: :unauthorized
       end
     end
 

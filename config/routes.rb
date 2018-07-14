@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   post '/login', to: 'users#login'
   post '/register', to: 'users#register', :defaults => { :format => :json }
 
-  get '/user/all', to: 'users#all', :defaults => { :format => :json }
+  get '/user/all' => 'users#all', :as => 'user', :defaults => { :format => :json }
   get '/user/:id', to: 'users#show', :defaults => { :format => :json }
   put '/user/update/:id', to: 'users#update', :defaults => { :format => :json }
   delete '/user/delete/:id', to: 'users#destroy', :defaults => { :format => :json }
